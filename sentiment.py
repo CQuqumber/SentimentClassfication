@@ -20,3 +20,12 @@ class SentimentNetwork:
 			for word in review.split(" "):
 				review_vocab.add(word)
 		self.review_vocab = list(review_vocab)
+
+
+		label_vocab = set()
+		for label in labels:
+			label_vocab.add(label)
+		self.label_vocab = list(label_vocab)
+
+		self.review_vocab_size = len(self.review_vocab)
+		self.label_vocab_size = len(self.label_vocab)
