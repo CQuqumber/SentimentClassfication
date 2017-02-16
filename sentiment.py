@@ -14,4 +14,9 @@ class SentimentNetwork:
 		self.init_network(len(self.review_vocab), hidden_nodes, 1 ,learning_rate)
 
 	def pre_process_data(self, reviews, labels):
+
 		review_vocab = set()
+		for review in reviews:
+			for word in review.split(" "):
+				review_vocab.add(word)
+		self.review_vocab = list(review_vocab)
