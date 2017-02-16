@@ -55,6 +55,12 @@ class SentimentNetwork:
 
 		self.layer_0 = np.zeros((1, input_nodes))
 
+	def get_target_for_label(self, label):
+		if(label == 'POSITIVE'):
+			return 0
+		else:
+			return 1
+
 
 
 
