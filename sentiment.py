@@ -62,8 +62,42 @@ class SentimentNetwork:
 			return 1
 
 
+	def sigmoid(self, x):
+		return 1/(1 + np.exp(-x))
+
+	def sigmoid_output_2_derivative(self, output):
+		return output * (1 - output)
 
 
+	def train(self, training_reviews, training_labels):
+		#insert debugging assertions
+		assert(len(training_reviews) == len(training_labels))
+
+		correct_so_far = 0
+
+		start = time.time()
+
+		for i in range(len(training_reviews)):
+
+			review = training_reviews[i]
+			label = training_labels[i]
+
+			# Forward pass
+
+			# Input Layer
+			self.update_input_layer(review)
+
+			# Hidden layer
+			layer_1 = self.layer_0.dot(self.weights_0_1)
+
+			# Output layer
+			layer_2 = self.sigmoid(layer_1.dot(self.weights_1_2))
+
+			### Backward pass
+			layer_2_error = layer_2 - self.get_target_for_label(label)
+			#  O/p error difference between desire and actual
+
+			layer_2_delta = layer_2_error * self.sigmoid_output_2_derivative(layer_2)
 
 
 
