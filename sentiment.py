@@ -94,10 +94,76 @@ class SentimentNetwork:
 			layer_2 = self.sigmoid(layer_1.dot(self.weights_1_2))
 
 			### Backward pass
+
+			## Output error
 			layer_2_error = layer_2 - self.get_target_for_label(label)
 			#  O/p error difference between desire and actual
 
 			layer_2_delta = layer_2_error * self.sigmoid_output_2_derivative(layer_2)
+
+			## Baclpropagated error
+
+			layer_1_error = layer_2_delta.dot(self.weights_1_2.T)
+			# error propagated to the hidden layer
+
+			layer_1_delta = layer_1_error
+			# hidden layer gradient - no nonlinearity so it's the same as the error
+
+			## Update the weights
+
+			self.weights_1_2 -= layer_1.T.dot(layer_2_delta) * self.learning_rate
+			# update hidden - to - output weight with gradient descent step
+
+			self.weights_0_1 -= self.layer_0.T.dot(layer_1_delta) * self.learning_rate
+			# update the input 2 hidden weights with gradient descent step
+
+			if(np.abs(layer_2_error) < 0.5):
+				correct_so_far += 1
+
+			reviews_per_second = i / float(time.time() - start)	# start = time.time()
+
+			sys.stdout.write("\rProgress:" + str(100 * i/float(len(training_reviews)))[:4] +\
+				"% Speed(reviews/sec):" + str(reviews_per_second)[0:5] + \
+			 	" #Correct:" + str(correct_so_far) + " #Trained:" + str(i+1) + \
+			 	" Training Accuracy:" + str(correct_so_far * 100 / float(i+1))[:4] + "%")
+            
+			if(i % 2500 == 0):
+				print("")
+
+	def test(self, testing_reviews, testing_labels):
+
+		correct = 0
+
+		start = time.time()
+
+		for i in range(len(testing_reviews)):
+			pred = self.run(testing_reviews[i])
+			if(pred == testing_labels[i]):
+				correct += 1
+
+			reviews_per_second = i / float(time.time() - start)
+			sys.stdout.write("\rProgress:" + str(100 * i/float(len(testing_reviews)))[:4] + \
+			"% Speed(reviews/sec):" + str(reviews_per_second)[0:5] + \
+			"% #Correct:" + str(correct) + " #Tested:" + str(i+1) + \
+			" Testing Accuracy:" + str(correct * 100 / float(i+1))[:4] + "%")
+
+	def run(self, review):
+
+		# Input Layer
+		self.update_input_layer(review.lower())
+
+		# Hidden Layer
+		layer_1 = self.layer_0.dot(self.weights_0_1)
+
+		# Output layer
+		layer_2 = self.sigmoid(layer_1.dot(self.weights_1_2))
+
+		if(layer_2[0] > 0.5):
+			return 'POSITIVE'
+		else:
+			return 'NEGATIVE'
+
+
 
 
 
