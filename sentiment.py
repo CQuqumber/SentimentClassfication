@@ -29,3 +29,13 @@ class SentimentNetwork:
 
 		self.review_vocab_size = len(self.review_vocab)
 		self.label_vocab_size = len(self.label_vocab)
+
+
+		self.word2index = {}
+		for i, word in enumerate(self.review_vocab):
+			self.word2index[word] = i
+
+		self.label2index = {}
+		for i, label in enumerate(self.label_vocab):
+			self.label2index[label] = i
+		
