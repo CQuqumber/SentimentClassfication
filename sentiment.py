@@ -55,6 +55,13 @@ class SentimentNetwork:
 
 		self.layer_0 = np.zeros((1, input_nodes))
 
+	def update_input_layer(self, review):
+		# clear out previous state, reset the layer to be all 0s
+		self.layer_0 *= 0
+		for word in review.split(" "):
+			if(word in self.word2index.key()):
+				self.layer_0[0][self.word2index[word]] += 1
+
 	def get_target_for_label(self, label):
 		if(label == 'POSITIVE'):
 			return 0
@@ -142,6 +149,7 @@ class SentimentNetwork:
 				correct += 1
 
 			reviews_per_second = i / float(time.time() - start)
+
 			sys.stdout.write("\rProgress:" + str(100 * i/float(len(testing_reviews)))[:4] + \
 			"% Speed(reviews/sec):" + str(reviews_per_second)[0:5] + \
 			"% #Correct:" + str(correct) + " #Tested:" + str(i+1) + \
