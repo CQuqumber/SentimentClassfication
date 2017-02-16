@@ -38,4 +38,42 @@ class SentimentNetwork:
 		self.label2index = {}
 		for i, label in enumerate(self.label_vocab):
 			self.label2index[label] = i
-		
+
+	def init_network(self, input_nodes, hidden_nodes, output_nodes, learning_rate):
+		# set number of nodes in input, hidden and output layers
+		self.input_nodes = input_nodes
+		self.hidden_nodes = hidden_nodes
+		self.output_nodes = output_nodes
+
+		#Initialze weights
+		self.weights_0_1 = np.zeros((self.input_nodes, self.hidden_nodes))
+
+		self.weights_1_2 = np.random.normal(0.0, self.output_nodes**-0.5, \
+											(self.hidden_nodes, self.output_nodes) )
+
+		self.learning_rate = learning_rate
+
+		self.layer_0 = np.zeros((1, input_nodes))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
