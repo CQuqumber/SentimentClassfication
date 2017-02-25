@@ -1,4 +1,4 @@
-# # Sentiment Classification & How To "Frame Problems" for a Neural Network
+## Sentiment Classification & How To "Frame Problems" for a Neural Network
 
 
 The project from the Deep Learning Nanodegree in
