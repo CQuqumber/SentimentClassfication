@@ -59,8 +59,7 @@ class SentimentNetwork:
     def update_input_layer(self, review):
         self.layer_0 *= 0
         for word in review.split(" "):
-            if( word in self.word2index):
-                self.layer_0[0][word2index[word]] = 1
+            self.layer_0[0][self.word2index[word]] = 1
 
 
 
@@ -94,7 +93,7 @@ class SentimentNetwork:
 
             self.update_input_layer(review)
 
-            layer_1 = self.layer_0.dot(weights_0_1)
+            layer_1 = self.layer_0.dot(self.weights_0_1)
 
             layer_2 = self.sigmoid(layer_1.dot(self.weights_1_2))
 
@@ -112,14 +111,11 @@ class SentimentNetwork:
             if(np.abs(layer_2_error) < .5):
                 correct_so_far += 1
 
-            review_per_second = i /float(time.time() - start)
+            reviews_per_second = i /float(time.time() - start)
 
-            sys.stdout.write("\rProcess:" , str(100 *i / float(len(training_reviews)))[:4]\
-                                + "% Speed(reviews/sec): " + str(review_per_second)[0:5]\
-                                + " # Correct:" + str(correct_so_far) \
-                                + " # Trained:" + str(i + 1) \
-                                + " Training Accuracy:" \
-                                + str(correct_so_far * 100) / float(i + 1)[:4] + "%" )
+            sys.stdout.write("\rProgress:" + str(100 * i/float(len(training_reviews)))[:4] + "% Speed(reviews/sec):" + str(reviews_per_second)[0:5] + " #Correct:" + str(correct_so_far) + " #Trained:" + str(i+1) + " Training Accuracy:" + str(correct_so_far * 100 / float(i+1))[:4] + "%")
+
+
 
             if(i % 2000 == 0):
                 print("")
