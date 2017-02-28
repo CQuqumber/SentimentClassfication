@@ -174,7 +174,7 @@ class SentimentNetwork:
 		sys.stdout.write("\rProgress:" + str(100 * i/float(len(testing_reviews)))[:4]\
 		+ "% Speed(reviews/sec):" + str(reviews_per_second)[0:5]\
 		+ " #Correct:" + str(correct) + " #Trained:" + str(i+1) \
-		+ " Training Accuracy:" + str(correct * 100 / float(i+1))[:4] + "%")
+		+ " TESTING Accuracy:" + str(correct * 100 / float(i+1))[:4] + "%")
 
 
 

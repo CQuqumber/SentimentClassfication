@@ -6,16 +6,16 @@ from preview_label import *
 class SentimentNetwork:
 	"""docstring for SentimentNetwork"""
 	def __init__(self, reviews, labels min_count = 10, polarity_cutoff = 0.1, hidden_nodes = 10, learning_rate = 0.1):
-		
+
 		np.random.seed(1)
 
 		self.pre_process_data(reviews, polarity_cutoff, min_count)
-		
+
 		self.init_network(len(self.reviews_vocab), hidden_nodes, 1, learning_rate)
 
 
 	def pre_process_data(self, reviews, polarity_cutoff, min_count):
-		
+
 		positive_counts = Counter()
 		negative_counts = Counter()
 		total_counts = Counter()
@@ -169,10 +169,6 @@ class SentimentNetwork:
 
 
 
-
-
-
-
 	def run(self, review):
 		
 		self.layer_1 *= 0
@@ -205,66 +201,7 @@ class SentimentNetwork:
 
 			reviews_per_second = i /float(time.time() - start)
 
-			sys.stdout.write("\rProgress:" + str(100 * i/float(len(training_reviews)))[:4] \
+			sys.stdout.write("\n\rProgress:" + str(100 * i/float(len(training_reviews)))[:4] \
             	+ "% Speed(reviews/sec):" + str(reviews_per_second)[0:5] \
             	+ " #Correct:" + str(correct_so_far) + " #Trained:" + str(i+1) \
-            	+ " Training Accuracy:" + str(correct_so_far * 100 / float(i+1))[:4] + "%")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            	+ " TESTING Accuracy:" + str(correct_so_far * 100 / float(i+1))[:4] + "%")
